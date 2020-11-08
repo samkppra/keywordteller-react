@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "keywordteller18d244b5": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}
