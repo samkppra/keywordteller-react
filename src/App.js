@@ -15,7 +15,7 @@ function App() {
   const [searchWord, setSearchWord] = React.useState('')
   
   const sendSearchword =async ()=> {
-    let res =await api.put('/', {"Data": "'"+searchWord+"'", "PartitionKey":"1"})
+    let res =await api.put('/', {"Data": searchWord, "PartitionKey":"1"})
     console.log(res)
   }
   
