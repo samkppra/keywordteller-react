@@ -24,7 +24,7 @@ function App() {
   
   const sendSearchword =async ()=> {
     console.log(id)
-    let res =await api.put('/', {"Data": {"searchword" : searchWord , "id" : id, "email" :email}, "PartitionKey":"1"})
+    let res =await api.put('/', {"Data": {"Keyword" : searchWord , "CustomerId" : id, "Email" :email}, "PartitionKey":"1"})
     console.log(res)
   }
   
