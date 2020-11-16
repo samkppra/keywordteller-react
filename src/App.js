@@ -31,7 +31,10 @@ function App() {
   
  
   const sendSearchword = async () => {
-    const res= await api.put('/', {"Data": {"Keyword" : searchWord , "CustomerId" : id, "Email" :email}, "PartitionKey":"1"})
+    const res= await api.put('/', {"Data": JSON.stringify({"Keyword" : searchWord , "CustomerId" : id, "Email" :email}), "PartitionKey":JSON.stringify("1")})
+    .then(
+      componentDidMount()
+    )
   console.log(res)
   console.log(searchWord)
   }
@@ -50,7 +53,6 @@ function App() {
   const handleSubmit = e=> {
     e.preventDefault()
     sendSearchword()
-    componentDidMount()
   }
    
   return (
