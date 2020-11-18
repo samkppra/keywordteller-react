@@ -18,25 +18,38 @@ let email = null
 
 Amplify.configure(config)
 
-function App() {
-  
+function App() {  
   
   Auth.currentUserInfo().then(info => {
     id = info.id
     if(info.attributes) {email = info.attributes.email}
   });
 
-  const [searchWord, setSearchWord] = React.useState('')
+  const [topics, setTopics] = React.useState('')
   const [result, setResult] = React.useState([])
   
+  // const [state, setState] = useState(initialState);
+  // Returns a stateful value, and a function to update it.
+  const [youtubeUrl, setYoutubeUrl] = React.useState('')  
  
   const sendSearchword = async () => {
-    const res= await api.put('/', {"Data": JSON.stringify({"Keyword" : searchWord , "CustomerId" : id, "Email" :email}), "PartitionKey":JSON.stringify("1")})
+    
+    // TODO topics: handle multiple lines and comma and separate each phrase by |
+    const payload = {
+      Data: {
+        "Keyword": topics,
+        "CustomerId": id,
+        "Email": email
+      },
+      "PartitionKey": "1"
+    }    
+
+    const res= await api.put('/', payload)
     .then(
       componentDidMount()
     )
   console.log(res)
-  console.log(searchWord)
+  console.log(topics)
   }
 
   const componentDidMount = async () => {
@@ -59,14 +72,19 @@ function App() {
     <div className="App">
       <header className="App-header">
         <form onSubmit={handleSubmit}>
-          <input value={searchWord} placeholder="search" onChange={(e) => setSearchWord(e.target.value)}></input>
-          <button>Search</button>
+          <p>Your YouTube channel URL</p>
+          <input value={youtubeUrl} placeholder="Example youtube.com/c/YouTubeCreators" onChange={(e) => setYoutubeUrl(e.target.value)} style={{ width: "300px" }}></input>
+          <p>Field of specialisation</p>
+          <textarea value={topics} placeholder="Example &#13;Ice cream recipe&#13;Homemade ice creams" onChange={(e) => setTopics(e.target.value)} rows={5} cols={50}></textarea>
+          <br></br>
+          <button style={{width: "150px", background:"lightgreen"}}>Submit</button>
         </form>
-         
-        
-       <ul>{result.map(i => <li>{JSON.stringify(i)}</li>)}</ul>
-        
-        <AmplifySignOut></AmplifySignOut>
+
+        <ul>{result.map(i => <li>{JSON.stringify(i)}</li>)}</ul>
+
+
+        <AmplifySignOut width={5}></AmplifySignOut>
+
       </header>
     </div>
   );
